@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercices E31 – prise de contact, découverte des besoins et présentation du produit</title>
+<style>
+/* ── RESET & BASE ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #f6f7fb;
+  --surface:   #ffffff;
+  --card:      #ffffff;
+  --border:    #e2e5ee;
+  --border-hi: #c5cad8;
+  --text:      #1f2433;
+  --text-dim:  #5f657a;
+  --accent:    #d99a00;
+  --green:     #1f9d4c;
+  --red:       #d64545;
+  --blue:      #2f7fc1;
+  --purple:    #7a52b3;
+  --font-head: 'Syne', sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --radius:    10px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+
+html { color-scheme: light; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── HEADER ──────────────────────────────────────────────── */
+.site-header {
+  background: linear-gradient(135deg, #eef2fa 0%, #ffffff 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 48px 24px 36px;
+  text-align: center;
+}
+.site-header .kicker {
+  display: inline-block;
+  background: var(--accent);
+  color: #ffffff;
+  font-family: var(--font-head);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  padding: 3px 12px;
+  border-radius: 3px;
+  margin-bottom: 18px;
+}
+.site-header h1 {
+  font-family: var(--font-head);
+  font-size: clamp(22px, 5vw, 38px);
+  font-weight: 800;
+  color: #141826;
+  margin-bottom: 8px;
+  line-height: 1.15;
+}
+.site-header .sub {
+  color: var(--text-dim);
+  font-size: 14px;
+  font-weight: 300;
+  max-width: 520px;
+  margin: 0 auto 24px;
+}
+
+/* ── NAV ANCRES ──────────────────────────────────────────── */
+.nav-anchors {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.nav-anchors a {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 16px;
+  text-decoration: none;
+  transition: border-color .15s, color .15s;
+}
+.nav-anchors a:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── CONTENEUR PRINCIPAL ─────────────────────────────────── */
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+}
+
+/* ── TITRE DE BLOC ───────────────────────────────────────── */
+.bloc-titre {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 52px 0 6px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.bloc-titre:first-child { margin-top: 0; }
+.bloc-titre .icone {
+  font-size: 26px;
+  flex-shrink: 0;
+}
+.bloc-titre h2 {
+  font-family: var(--font-head);
+  font-size: 20px;
+  font-weight: 800;
+  color: #141826;
+}
+
+/* ── MÉMO FORMULE ────────────────────────────────────────── */
+.memo {
+  background: #effaf2;
+  border: 1px solid #c8e8d2;
+  border-left: 4px solid var(--green);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  font-size: 13.5px;
+  line-height: 1.75;
+}
+.memo .memo-titre {
+  font-family: var(--font-head);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 8px;
+}
+.memo code {
+  display: block;
+  background: #e2f4e8;
+  border-radius: 5px;
+  padding: 8px 14px;
+  color: #17703a;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  margin: 4px 0;
+}
+.memo .note {
+  color: var(--text-dim);
+  font-size: 12.5px;
+  margin-top: 6px;
+}
+
+/* ── CARTE EXERCICE ──────────────────────────────────────── */
+.exo-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 14px;
+  overflow: hidden;
+  transition: border-color .15s;
+}
+.exo-card:hover { border-color: var(--border-hi); }
+
+.exo-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+.exo-header::-webkit-details-marker { display: none; }
+
+.exo-num {
+  font-family: var(--font-head);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-dim);
+  flex-shrink: 0;
+  min-width: 40px;
+}
+.badge {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 2px 9px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.badge-1 { background: #e6f6ea; color: var(--green); border: 1px solid #bfe3c9; }
+.badge-2 { background: #fdf5dc; color: var(--accent); border: 1px solid #f0dc9a; }
+.badge-3 { background: #fde8e8; color: var(--red); border: 1px solid #f3c2c2; }
+.badge-exam { background: #f1eafa; color: var(--purple); border: 1px solid #d8c7ee; }
+
+.exo-titre-txt {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  flex: 1;
+}
+.chevron {
+  color: var(--text-dim);
+  font-size: 13px;
+  flex-shrink: 0;
+  transition: transform .2s;
+}
+details[open] .chevron { transform: rotate(180deg); }
+
+/* ── CORPS DE L'EXERCICE ─────────────────────────────────── */
+.exo-body {
+  padding: 0 18px 20px;
+  border-top: 1px solid var(--border);
+}
+
+.contexte {
+  background: #eef4fb;
+  border-left: 3px solid var(--blue);
+  border-radius: 0 6px 6px 0;
+  padding: 14px 18px;
+  margin: 16px 0;
+  font-size: 14px;
+  line-height: 1.75;
+}
+.contexte strong { color: #141826; }
+
+.tableau-donnees {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 12px 0;
+}
+.tableau-donnees th {
+  background: #f0f2f7;
+  color: var(--text-dim);
+  font-family: var(--font-head);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.tableau-donnees td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+.tableau-donnees tr:last-child td { border-bottom: none; }
+.tableau-donnees td.num { font-weight: 600; color: #141826; }
+.tableau-donnees tr.total-row td {
+  background: #f0f2f7;
+  font-family: var(--font-head);
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.questions { margin: 18px 0 0; }
+.question {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: flex-start;
+}
+.question .q-num {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  background: var(--accent);
+  color: #ffffff;
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 11px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+.question p { font-size: 14px; margin: 0; }
+
+/* ── ORDRE DE GRANDEUR ───────────────────────────────────── */
+.ordre-grandeur {
+  background: #fff8e1;
+  border: 1px solid #f0dc9a;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 12.5px;
+  color: #7a5d00;
+  margin: 12px 0 0;
+}
+.ordre-grandeur::before { content: "💡 "; }
+
+/* ── BOUTON CORRECTION ───────────────────────────────────── */
+.btn-corrige {
+  background: none;
+  border: 1px solid var(--border-hi);
+  border-radius: 6px;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 16px;
+  margin-top: 18px;
+  transition: all .15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-corrige:hover { border-color: var(--green); color: var(--green); }
+
+/* ── CORRECTION ──────────────────────────────────────────── */
+.correction {
+  display: none;
+  background: #effaf2;
+  border: 1px solid #c8e8d2;
+  border-radius: 6px;
+  padding: 16px 18px;
+  margin-top: 14px;
+  font-size: 13.5px;
+  line-height: 1.8;
+}
+.correction.visible { display: block; }
+.correction .corr-etape {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #d5ecdc;
+}
+.correction .corr-etape:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.correction .c-num {
+  display: inline-block;
+  background: var(--green);
+  color: #ffffff;
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 10px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 18px;
+  margin-right: 6px;
+}
+.correction code {
+  display: block;
+  background: #e2f4e8;
+  border-radius: 4px;
+  padding: 6px 12px;
+  color: #17703a;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  margin: 5px 0;
+}
+.correction .res {
+  font-family: var(--font-head);
+  font-weight: 700;
+  color: #141826;
+}
+.correction .conclu {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #2f6b43;
+  font-style: italic;
+}
+.correction .tableau-corr {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  margin: 8px 0;
+}
+.correction .tableau-corr th {
+  background: #e2f4e8;
+  color: var(--text-dim);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  text-align: left;
+}
+.correction .tableau-corr td {
+  padding: 6px 10px;
+  border-bottom: 1px solid #d5ecdc;
+  color: #2b3a30;
+}
+.correction .tableau-corr td.val {
+  font-weight: 700;
+  color: var(--green);
+}
+.correction .tableau-corr tr.t-total td {
+  background: #e2f4e8;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* ── SÉPARATEUR ──────────────────────────────────────────── */
+hr.section-sep {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 54px 0 0;
+}
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 20px;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 12px;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 520px) {
+  .exo-titre-txt { font-size: 13px; }
+  .contexte { font-size: 13px; }
+  .tableau-donnees { font-size: 12px; }
+}
+
+/* ── AJOUTS : listes de choix et notes rédigées ─────────── */
+.choix { margin: 10px 0 0 32px; font-size: 13.5px; }
+.choix li { margin-bottom: 3px; }
+.redige { font-style: italic; color: #2f4a38; font-size: 13px; line-height: 1.9; border: 1px solid #c8e8d2; background: #f7fcf8; padding: 14px; border-radius: 5px; }
+.dialogue { font-size: 13.5px; line-height: 1.8; }
+.dialogue .v { color: #2f7fc1; font-weight: 600; }
+.dialogue .c { color: #7a52b3; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══════════════════════════════════════════════ -->
+<header class="site-header">
+  <div class="kicker">🛍️ Exercices E31 – bac pro MCV</div>
+  <h1>Prendre contact, découvrir<br>les besoins et présenter le produit</h1>
+  <p class="sub">17 exercices progressifs – de l'identification des notions à l'analyse complète d'une situation de vente</p>
+  <nav class="nav-anchors">
+    <a href="#contact">🤝 Prise de contact (4 ex.)</a>
+    <a href="#decouverte">👂 Découverte du client (4 ex.)</a>
+    <a href="#besoins">🎯 Besoins et mobiles (4 ex.)</a>
+    <a href="#presentation">📦 Présentation du produit (3 ex.)</a>
+    <a href="#complet">🏁 Cas complets (2 ex.)</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- ══════════════════════════════════════════════════════════
+     BLOC 1 – PRISE DE CONTACT
+══════════════════════════════════════════════════════════ -->
+<div class="bloc-titre" id="contact">
+  <span class="icone">🤝</span>
+  <h2>Bloc 1 – Prendre contact avec le client et instaurer un climat de confiance</h2>
+</div>
+
+<div class="memo">
+  <div class="memo-titre">🗂 mémo notions</div>
+  <code>Étapes de la vente : accueil / prise de contact → découverte des besoins (questionnement) → reformulation → présentation du produit → argumentation → traitement des objections → conclusion (+ vente additionnelle) → prise de congé</code>
+  <code>Outils de prise de contact : face-à-face (magasin) | à distance traditionnels (téléphone, lettre, fax, SMS) | à distance web (e-mail, chatbot, webchat, réseaux sociaux, web call back)</code>
+  <code>Réussir sa prise de contact = bon état d'esprit + paralangage soigné (ton, débit, sourire) + langage verbal professionnel et personnalisé + phrase d'accroche qui suscite l'intérêt</code>
+  <p class="note">Le paralangage désigne tout ce qui accompagne la parole : ton de la voix, volume, débit, intonation. À distance, il remplace le non-verbal.</p>
+</div>
+
+<!-- EX 1 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 1</span>
+    <span class="badge badge-1">⬆ décollage</span>
+    <span class="exo-titre-txt">Identifier l'étape de la vente</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Vous êtes vendeur(se) dans une boutique de prêt-à-porter masculin. Voici des phrases prononcées par un vendeur au cours d'une vente :<br><br>
+      <strong>A.</strong> « C'est vrai, repasser une chemise n'est jamais un plaisir, mais celle-ci a l'avantage du repassage facile grâce au traitement anti-froissement. »<br>
+      <strong>B.</strong> « Si j'ai bien compris, vous recherchez un costume complet, avec un pantalon, une chemise et une veste, c'est bien cela ? »<br>
+      <strong>C.</strong> « Quel genre de costume recherchez-vous ? »<br>
+      <strong>D.</strong> « Et voilà votre ticket. Le costume sera prêt mercredi prochain. Nous vous enverrons un message pour vous le confirmer. Bonne journée ! »<br>
+      <strong>E.</strong> « Bonjour monsieur, bienvenue chez nous. »
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Associez chaque phrase à l'étape de la vente correspondante (aidez-vous du mémo).</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Remettez les phrases dans l'ordre chronologique de la vente.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Indice :</strong> une phrase qui commence par « si j'ai bien compris » vérifie la compréhension du besoin. Une phrase qui répond à une crainte du client traite une objection en apportant un argument.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <table class="tableau-corr">
+          <thead><tr><th>Phrase</th><th>Étape de la vente</th></tr></thead>
+          <tbody>
+            <tr><td>A</td><td class="val">Argumentation / traitement d'une objection (le client trouve le repassage contraignant)</td></tr>
+            <tr><td>B</td><td class="val">Reformulation</td></tr>
+            <tr><td>C</td><td class="val">Découverte des besoins (questionnement)</td></tr>
+            <tr><td>D</td><td class="val">Conclusion et prise de congé</td></tr>
+            <tr><td>E</td><td class="val">Accueil / prise de contact</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <code>E → C → B → A → D</code>
+        <p class="conclu">On accueille, on questionne, on reformule pour valider le besoin, on argumente, puis on conclut et on prend congé.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 2 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 2</span>
+    <span class="badge badge-1">⬆ décollage</span>
+    <span class="exo-titre-txt">Classer les outils de prise de contact</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Une enseigne de prêt-à-porter utilise les outils suivants pour entrer en contact avec ses clients :<br><br>
+      lettre postale – SMS – chatbot sur le site – accueil en boutique – webchat – téléphone – publication sur un réseau social – e-mail – fax – web call back (le client laisse son numéro sur le site et l'enseigne le rappelle)
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Classez ces outils en trois catégories : face-à-face, à distance avec des outils traditionnels, à distance avec des outils web.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Expliquez pourquoi le nombre d'outils de prise de contact a augmenté ces dernières années.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Indice :</strong> un seul outil relève du face-à-face. Un outil « web » passe par internet ou par le site de l'enseigne.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <table class="tableau-corr">
+          <thead><tr><th>Catégorie</th><th>Outils</th></tr></thead>
+          <tbody>
+            <tr><td>Face-à-face</td><td class="val">accueil en boutique</td></tr>
+            <tr><td>À distance – traditionnels</td><td class="val">lettre postale, SMS, téléphone, fax</td></tr>
+            <tr><td>À distance – web</td><td class="val">chatbot, webchat, réseau social, e-mail, web call back</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <p class="conclu">Le développement du numérique et du commerce omnicanal a multiplié les points de contact : le client passe d'un canal à l'autre (site, réseaux sociaux, boutique) et l'entreprise doit être joignable sur chacun d'eux.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 3 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 3</span>
+    <span class="badge badge-2">⬆⬆ intermédiaire</span>
+    <span class="exo-titre-txt">Repérer les erreurs d'une prise de contact</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Un client entre dans la boutique. Le vendeur, en train de ranger un linéaire et sans se retourner, lance :<br><br>
+      « Ouais, bonjour… Vous voulez quoi ? »<br><br>
+      Le même jour, un autre vendeur appelle M. Nunes pour lui annoncer que sa commande est arrivée. Il parle très vite, d'une voix monotone, et ne se présente pas.
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Relevez les erreurs commises dans la première situation (face-à-face).</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Relevez les erreurs commises dans la seconde situation (téléphone). Expliquez pourquoi le paralangage est encore plus important à distance.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">3</span>
+        <p>Réécrivez une prise de contact correcte pour chacune des deux situations.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Indice :</strong> reprenez les quatre conditions du mémo (état d'esprit, paralangage, langage verbal, accroche) et vérifiez-les une par une.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <p>Le vendeur ne se rend pas disponible (il continue de ranger), il ne regarde pas le client (non-verbal négatif), son langage est familier (« ouais ») et sa question est brutale. Aucun climat de confiance n'est instauré.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <p>Débit trop rapide, ton monotone, absence de présentation (nom, enseigne). À distance, le client ne voit ni le sourire ni l'attitude du vendeur : seule la voix transmet le sérieux, la courtoisie et l'image de l'entreprise.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">3</span>
+        <code>Face-à-face : « Bonjour monsieur, bienvenue ! Je suis à votre disposition si vous souhaitez un conseil. »</code>
+        <code>Téléphone : « Bonjour monsieur Nunes, Léa, de la boutique de Colmar. Je vous appelle pour vous informer que votre costume est prêt : vous pouvez venir le retirer dès aujourd'hui. »</code>
+        <p class="conclu">Le vendeur se rend disponible, sourit (même au téléphone, cela s'entend), personnalise son message et utilise un registre professionnel.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 4 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 4</span>
+    <span class="badge badge-2">⬆⬆ intermédiaire</span>
+    <span class="exo-titre-txt">Rédiger une phrase d'accroche adaptée au canal</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Votre tutrice vous demande de préparer, par écrit, les phrases d'accroche suivantes :<br><br>
+      <strong>a.</strong> Une cliente entre dans la boutique et semble s'intéresser à un costume en vitrine.<br>
+      <strong>b.</strong> Une internaute, « Anna129 », demande sur le compte de l'enseigne si une chemise existe en taille L.<br>
+      <strong>c.</strong> Vous devez informer l'ensemble des clients fidèles d'une vente privée (remises jusqu'à 60 %).
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Indiquez, pour chaque situation, la modalité de prise de contact (face-à-face, téléphone, réseau social, SMS / e-mailing…).</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Rédigez une phrase d'accroche adaptée à chaque situation.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Indice :</strong> une bonne accroche est courte, personnalisée et donne envie d'en savoir plus. Sur un réseau social, on remercie l'internaute et on répond rapidement.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <table class="tableau-corr">
+          <thead><tr><th>Situation</th><th>Modalité</th><th>Exemple d'accroche</th></tr></thead>
+          <tbody>
+            <tr><td>a</td><td>Face-à-face</td><td class="val">« Bonjour madame, c'est un très beau modèle. C'est pour offrir ou pour une occasion particulière ? »</td></tr>
+            <tr><td>b</td><td>Réseau social</td><td class="val">« Bonjour Anna, merci pour votre intérêt ! Cette chemise est disponible en L, vous trouverez toutes les informations en suivant ce lien… »</td></tr>
+            <tr><td>c</td><td>SMS / e-mailing</td><td class="val">« Chère cliente, cher client, en avant-première, profitez de remises jusqu'à 60 % lors de notre vente privée VIP ! »</td></tr>
+          </tbody>
+        </table>
+        <p class="conclu">Toute accroche cohérente, courtoise et adaptée au canal est acceptée.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<hr class="section-sep">
+
+<!-- ══════════════════════════════════════════════════════════
+     BLOC 2 – DÉCOUVERTE DU CLIENT
+══════════════════════════════════════════════════════════ -->
+<div class="bloc-titre" id="decouverte">
+  <span class="icone">👂</span>
+  <h2>Bloc 2 – Découvrir le client : écoute active et questionnement</h2>
+</div>
+
+<div class="memo">
+  <div class="memo-titre">🗂 mémo notions</div>
+  <code>Écoute active = observer + questionner + reformuler (qualités : observation, écoute, empathie, concentration, intérêt, esprit de synthèse)</code>
+  <code>Question ouverte → le client s'exprime librement (ex. : « Que pensez-vous de la nouvelle collection ? »)</code>
+  <code>Question alternative → choix entre deux options (ex. : « Vous préférez ce pull en blanc ou en gris ? »)</code>
+  <code>Question fermée → réponse précise ou oui / non (ex. : « Quelle taille désirez-vous ? »)</code>
+  <p class="note">L'empathie est la capacité à ressentir et comprendre ce que l'autre éprouve. La reformulation permet de vérifier que l'on a bien compris le besoin du client.</p>
+</div>
+
+<!-- EX 5 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 5</span>
+    <span class="badge badge-1">⬆ décollage</span>
+    <span class="exo-titre-txt">Identifier le type de question</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Voici des questions posées par un vendeur :<br><br>
+      <strong>1.</strong> « Pour quelle occasion recherchez-vous ce costume ? »<br>
+      <strong>2.</strong> « Vous portez du 42 ? »<br>
+      <strong>3.</strong> « Préférez-vous une coupe ajustée ou une coupe droite ? »<br>
+      <strong>4.</strong> « Comment portez-vous habituellement vos chemises ? »<br>
+      <strong>5.</strong> « Souhaitez-vous l'essayer ? »<br>
+      <strong>6.</strong> « Vous le voulez en bleu marine ou en noir ? »
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Indiquez pour chaque question s'il s'agit d'une question ouverte, fermée ou alternative.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Quel type de question faut-il privilégier au début de la découverte ? Justifiez.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Indice :</strong> si l'on peut répondre par « oui » ou « non » ou par un seul mot précis, la question est fermée. S'il y a un « ou » entre deux options, elle est alternative.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <table class="tableau-corr">
+          <thead><tr><th>Question</th><th>Type</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td class="val">Ouverte</td></tr>
+            <tr><td>2</td><td class="val">Fermée</td></tr>
+            <tr><td>3</td><td class="val">Alternative</td></tr>
+            <tr><td>4</td><td class="val">Ouverte</td></tr>
+            <tr><td>5</td><td class="val">Fermée</td></tr>
+            <tr><td>6</td><td class="val">Alternative</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <p class="conclu">La question ouverte : elle laisse le client s'exprimer librement et donne au vendeur un aperçu de ses motivations. Les questions alternatives et fermées servent ensuite à préciser le besoin.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 6 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 6</span>
+    <span class="badge badge-1">⬆ décollage</span>
+    <span class="exo-titre-txt">Transformer des questions fermées en questions ouvertes</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Un vendeur débutant ne pose que des questions fermées et obtient peu d'informations :<br><br>
+      <strong>a.</strong> « C'est pour vous ? »<br>
+      <strong>b.</strong> « Vous aimez ce modèle ? »<br>
+      <strong>c.</strong> « C'est pour un mariage ? »<br>
+      <strong>d.</strong> « Vous avez un budget ? »
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Transformez chaque question en question ouverte.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Indice :</strong> commencez par un mot interrogatif : qui, que, quel, comment, pourquoi, pour quelle occasion…</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <code>a. « Pour qui recherchez-vous cet article ? »</code>
+        <code>b. « Que pensez-vous de ce modèle ? »</code>
+        <code>c. « Pour quelle occasion souhaitez-vous ce costume ? »</code>
+        <code>d. « Quel budget envisagez-vous pour cet achat ? »</code>
+        <p class="conclu">Toute formulation commençant par un mot interrogatif et appelant une réponse développée est acceptée.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 7 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 7</span>
+    <span class="badge badge-2">⬆⬆ intermédiaire</span>
+    <span class="exo-titre-txt">Analyser le comportement du client et adapter son attitude</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Vous observez les clients présents en boutique. Pour chacun, vous devez repérer ce que traduit son comportement : <strong>indisponibilité, réflexion, satisfaction, doute ou certitude</strong>.
+    </div>
+    <table class="tableau-donnees">
+      <thead><tr><th>Client</th><th>Comportement observé</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Une cliente regarde et compare plusieurs pull-overs depuis quelques minutes.</td></tr>
+        <tr><td>2</td><td>Une cliente se promène dans les rayons en téléphonant, très absorbée par sa conversation.</td></tr>
+        <tr><td>3</td><td>Une cliente tourne dans la boutique depuis 20 minutes sans avoir choisi un seul article.</td></tr>
+        <tr><td>4</td><td>Un client entre d'un pas décidé et se dirige directement vers vous.</td></tr>
+        <tr><td>5</td><td>Deux amies discutent : elles trouvent la nouvelle collection très belle.</td></tr>
+      </tbody>
+    </table>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Indiquez ce que traduit le comportement de chaque client.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Précisez l'attitude à adopter (montrer de l'intérêt ou faire silence) et le type de question à poser.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">3</span>
+        <p>Rédigez une phrase d'approche pour les clients 1 et 4.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Indice :</strong> un seul client doit être laissé tranquille pour l'instant. Un client décidé sait ce qu'il veut : une question fermée suffit pour l'aider rapidement.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <table class="tableau-corr">
+          <thead><tr><th>Client</th><th>Ce que traduit le comportement</th><th>Attitude</th><th>Question</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td class="val">Réflexion</td><td>Montrer de l'intérêt</td><td>Ouverte</td></tr>
+            <tr><td>2</td><td class="val">Indisponibilité</td><td>Faire silence</td><td>Aucune</td></tr>
+            <tr><td>3</td><td class="val">Doute</td><td>Montrer de l'intérêt</td><td>Ouverte</td></tr>
+            <tr><td>4</td><td class="val">Certitude</td><td>Montrer de l'intérêt</td><td>Fermée</td></tr>
+            <tr><td>5</td><td class="val">Satisfaction</td><td>Montrer de l'intérêt</td><td>Ouverte</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <code>Client 1 : « Bonjour madame, vous semblez hésiter… Qu'est-ce qui vous plaît dans ces modèles ? »</code>
+        <code>Client 4 : « Bonjour monsieur. Puis-je vous renseigner ? »</code>
+        <p class="conclu">Le vendeur s'adapte au client : il ne dérange pas un client indisponible et va droit au but avec un client décidé.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 8 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 8</span>
+    <span class="badge badge-2">⬆⬆ intermédiaire</span>
+    <span class="exo-titre-txt">Rédiger une reformulation</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Un client vous explique : « Je suis témoin au mariage de mon frère dans trois semaines. Il me faut une tenue complète, mais je ne veux pas quelque chose de trop classique. Et j'aimerais pouvoir remettre la veste au bureau ensuite. Je ne voudrais pas dépasser 300 €. »
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Relevez les informations utiles à la vente contenues dans ce propos (occasion, produit, critères, délai, budget).</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Rédigez la reformulation que vous adresseriez au client.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">3</span>
+        <p>Expliquez l'intérêt de la reformulation pour le vendeur et pour le client.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Indice :</strong> la reformulation reprend l'essentiel avec ses propres mots et se termine par une question de validation (« c'est bien cela ? »).</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <p>Occasion : mariage (témoin). Produit : tenue complète. Critères : originale, veste réutilisable au bureau. Délai : 3 semaines. Budget : 300 € maximum.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <code>« Si je comprends bien, vous recherchez une tenue complète pour être témoin au mariage de votre frère dans trois semaines, un peu originale, avec une veste que vous pourrez porter au bureau, pour un budget de 300 € maximum. C'est bien cela ? »</code>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">3</span>
+        <p class="conclu">Pour le vendeur : vérifier sa compréhension et éviter de proposer un produit inadapté. Pour le client : se sentir écouté et compris, ce qui renforce le climat de confiance.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<hr class="section-sep">
+
+<!-- ══════════════════════════════════════════════════════════
+     BLOC 3 – BESOINS, MOTIVATIONS, MOBILES
+══════════════════════════════════════════════════════════ -->
+<div class="bloc-titre" id="besoins">
+  <span class="icone">🎯</span>
+  <h2>Bloc 3 – Rechercher les besoins, les motivations et les mobiles d'achat</h2>
+</div>
+
+<div class="memo">
+  <div class="memo-titre">🗂 mémo notions</div>
+  <code>Pyramide de Maslow (de la base au sommet) : 1. besoins physiologiques → 2. sécurité → 3. appartenance → 4. estime → 5. accomplissement de soi</code>
+  <code>Motivations : oblatives ou altruistes (faire plaisir aux autres) | hédonistes ou personnelles (se faire plaisir) | d'auto-expression (s'affirmer, exprimer sa personnalité)</code>
+  <code>Mobiles d'achat SONCASE : Sécurité – Orgueil – Nouveauté – Confort – Argent – Sympathie – Environnement</code>
+  <code>Types d'achat : impulsif (non prévu) | routinier (habituel) | réfléchi (comparé, souvent coûteux)</code>
+  <p class="note">Selon Maslow, un individu ne ressent un besoin de niveau supérieur que si le niveau précédent est satisfait. Les mobiles d'achat expliquent pourquoi le client choisit un produit plutôt qu'un autre ; les freins sont les raisons qui le retiennent d'acheter.</p>
+</div>
+
+<!-- EX 9 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 9</span>
+    <span class="badge badge-1">⬆ décollage</span>
+    <span class="exo-titre-txt">Identifier le type d'achat et le niveau de besoin</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      <strong>Partie A – types d'achat.</strong> Classez chaque achat : achat impulsif, routinier ou réfléchi.<br>
+      a. Un costume complet pour un mariage – b. Un tee-shirt en promotion repéré près de la caisse – c. Le renouvellement de chaussettes noires de la même marque – d. Un manteau en laine à 250 €.<br><br>
+      <strong>Partie B – besoins.</strong> Associez chaque propos à un niveau de la pyramide de Maslow.<br>
+      1. « Il fait froid et je viens de loin. Auriez-vous un pull qui tient bien chaud ? »<br>
+      2. « J'achète ces costumes car ils ne se déforment pas, ils gardent leur ligne. »<br>
+      3. « Je suis témoin à un mariage, je veux être le plus beau possible ! »<br>
+      4. « Peu importe le prix, il me faut cet ensemble et ces chaussures. »<br>
+      5. « Je veux le même blouson que mes amis du club de foot. »
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Complétez la partie A.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Complétez la partie B.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Indice :</strong> « être reconnu par un groupe » = appartenance ; « être admiré, valorisé » = estime ; « se réaliser sans limite » = accomplissement.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <code>a. réfléchi – b. impulsif – c. routinier – d. réfléchi</code>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <table class="tableau-corr">
+          <thead><tr><th>Propos</th><th>Niveau de besoin</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td class="val">Besoin physiologique</td></tr>
+            <tr><td>2</td><td class="val">Sécurité</td></tr>
+            <tr><td>3</td><td class="val">Estime</td></tr>
+            <tr><td>4</td><td class="val">Accomplissement de soi</td></tr>
+            <tr><td>5</td><td class="val">Appartenance</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 10 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 10</span>
+    <span class="badge badge-1">⬆ décollage</span>
+    <span class="exo-titre-txt">Identifier les motivations d'achat</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      <strong>a.</strong> « Je souhaite faire un cadeau à une amie. Pouvez-vous m'aider à choisir ? »<br>
+      <strong>b.</strong> « J'ai envie de changer de style. Pouvez-vous me conseiller ? »<br>
+      <strong>c.</strong> « J'ai repéré ce costume depuis plusieurs semaines, je le trouve très beau. L'avez-vous en bleu ? »<br>
+      <strong>d.</strong> « Je veux une tenue qui montre qui je suis, je ne m'habille pas comme tout le monde. »<br>
+      <strong>e.</strong> « C'est pour la fête des pères, je veux que mon père soit content. »
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Indiquez la motivation exprimée dans chaque propos : oblative, hédoniste ou d'auto-expression.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Indice :</strong> posez-vous la question « pour qui ? » (un autre = oblative) puis « pour quoi ? » (le plaisir = hédoniste ; s'affirmer = auto-expression).</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <code>a. oblative – b. auto-expression – c. hédoniste – d. auto-expression – e. oblative</code>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 11 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 11</span>
+    <span class="badge badge-2">⬆⬆ intermédiaire</span>
+    <span class="exo-titre-txt">Repérer les mobiles d'achat SONCASE</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      <strong>1.</strong> « Le tissu semble fragile, non ? Mon ami ne fait jamais attention à ses vêtements. Avez-vous quelque chose d'original et de résistant ? »<br>
+      <strong>2.</strong> « J'ai un petit budget et je cherche un costume pour un mariage. »<br>
+      <strong>3.</strong> « Je ne sais pas si cette couleur plairait à mon ami. Je cherche quelque chose d'un peu exceptionnel… »<br>
+      <strong>4.</strong> « C'est pour mon fils qui se marie. Je veux le plus beau modèle, peu importe le prix ! Il faut aussi qu'il soit confortable, la soirée va être longue. »<br>
+      <strong>5.</strong> « Ce jean est-il fabriqué en coton bio ? Je fais attention à ce que j'achète. »
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Identifiez le ou les mobiles d'achat SONCASE de chaque client. Justifiez par un mot ou une expression du propos.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Pour le client 5, citez un frein possible à l'achat.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Indice :</strong> un même propos contient souvent deux mobiles. Repérez les mots-clés : « résistant » (sécurité), « original » (nouveauté), « le plus beau » (orgueil), « budget » (argent)…</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <table class="tableau-corr">
+          <thead><tr><th>Client</th><th>Mobile(s)</th><th>Justification</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td class="val">Sécurité + nouveauté</td><td>« résistant », « original »</td></tr>
+            <tr><td>2</td><td class="val">Argent</td><td>« petit budget »</td></tr>
+            <tr><td>3</td><td class="val">Sympathie + orgueil</td><td>« plairait à mon ami », « exceptionnel »</td></tr>
+            <tr><td>4</td><td class="val">Orgueil + confort</td><td>« le plus beau », « confortable »</td></tr>
+            <tr><td>5</td><td class="val">Environnement</td><td>« coton bio »</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <p class="conclu">Frein possible : le prix plus élevé d'un produit écoconçu, ou un doute sur la réalité de l'engagement écologique de la marque.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 12 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 12</span>
+    <span class="badge badge-3">⬆⬆⬆ niveau examen</span>
+    <span class="exo-titre-txt">Adapter sa réponse au mobile d'achat du client</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Reprenez les clients 1 à 5 de l'exercice 11.
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Rédigez, pour chaque client, une réponse du vendeur qui s'appuie sur le ou les mobiles d'achat identifiés.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Expliquez pourquoi il est utile pour le vendeur de connaître les mobiles d'achat du client.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Indice :</strong> chaque réponse doit contenir un argument qui « parle » au mobile du client : une preuve pour la sécurité, une gamme de prix pour l'argent, une valorisation pour l'orgueil…</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <code>1. « C'est un produit de très bonne qualité. Touchez le tissu par vous-même ! Nous avons d'excellents retours clients et c'est un modèle de la nouvelle collection. »</code>
+        <code>2. « Nous avons des modèles pour tous les budgets. Suivez-moi, je vais vous montrer nos costumes les plus accessibles. »</code>
+        <code>3. « Ce modèle de la nouvelle collection est très original, ce sera un très beau cadeau. Votre ami a de la chance ! »</code>
+        <code>4. « Regardez cette pièce, elle est tout simplement magnifique, et sa coupe est très confortable à porter toute une soirée. »</code>
+        <code>5. « Oui, ce jean est en coton issu de l'agriculture biologique, l'étiquette en apporte la preuve. »</code>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <p class="conclu">Connaître les mobiles permet de sélectionner les produits adaptés et de choisir les arguments qui toucheront le client. L'argumentation est personnalisée, donc plus convaincante.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<hr class="section-sep">
+
+<!-- ══════════════════════════════════════════════════════════
+     BLOC 4 – PRÉSENTATION DU PRODUIT
+══════════════════════════════════════════════════════════ -->
+<div class="bloc-titre" id="presentation">
+  <span class="icone">📦</span>
+  <h2>Bloc 4 – Présenter et argumenter le produit</h2>
+</div>
+
+<div class="memo">
+  <div class="memo-titre">🗂 mémo notions</div>
+  <code>Règles de présentation : présenter un seul produit à la fois – commencer par le plus cher – mettre le produit en valeur – faire toucher, manipuler ou essayer le produit</code>
+  <code>Argument = caractéristique (ce qu'est le produit) + avantage (ce qu'il apporte au client) + preuve (démonstration, fiche produit, label, avis clients)</code>
+  <p class="note">La démonstration explique comment utiliser le produit et aide le client à se projeter. Faire essayer donne au client le sentiment que le produit lui appartient déjà.</p>
+</div>
+
+<!-- EX 13 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 13</span>
+    <span class="badge badge-1">⬆ décollage</span>
+    <span class="exo-titre-txt">Vrai ou faux : les règles de présentation</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      <strong>a.</strong> Il faut présenter tous les modèles en même temps pour que le client compare.<br>
+      <strong>b.</strong> Il faut commencer par présenter le produit le moins cher pour rassurer le client.<br>
+      <strong>c.</strong> Faire essayer le produit donne au client le sentiment qu'il lui appartient déjà.<br>
+      <strong>d.</strong> Mettre le produit en valeur permet de susciter le regard du client.<br>
+      <strong>e.</strong> La démonstration n'est utile que pour les produits techniques.
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Indiquez si chaque affirmation est vraie ou fausse et corrigez les affirmations fausses.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Indice :</strong> trois affirmations sont fausses.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <table class="tableau-corr">
+          <thead><tr><th>Affirmation</th><th>Réponse</th><th>Correction</th></tr></thead>
+          <tbody>
+            <tr><td>a</td><td class="val">Faux</td><td>On présente un seul produit à la fois pour une meilleure compréhension.</td></tr>
+            <tr><td>b</td><td class="val">Faux</td><td>On commence par le plus cher : le prix des suivants est ensuite mieux accepté.</td></tr>
+            <tr><td>c</td><td class="val">Vrai</td><td>–</td></tr>
+            <tr><td>d</td><td class="val">Vrai</td><td>–</td></tr>
+            <tr><td>e</td><td class="val">Faux</td><td>Elle aide à convaincre pour tout produit (ex. : montrer le tombé d'une veste, l'aspect infroissable d'une chemise).</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 14 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 14</span>
+    <span class="badge badge-2">⬆⬆ intermédiaire</span>
+    <span class="exo-titre-txt">Construire des arguments CAP à partir d'une fiche produit</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Vous travaillez au rayon image d'une grande surface spécialisée. Voici des extraits de la fiche produit d'un téléviseur Sony 55 pouces (139 cm) :
+    </div>
+    <table class="tableau-donnees">
+      <thead><tr><th>Caractéristique technique</th></tr></thead>
+      <tbody>
+        <tr><td>Résolution 4K HDR (3 840 × 2 160)</td></tr>
+        <tr><td>Rétroéclairage Full LED avec gestion locale du contraste</td></tr>
+        <tr><td>Processeur d'image X1 Extreme</td></tr>
+        <tr><td>Bords ultrafins, cadre quasi invisible</td></tr>
+        <tr><td>Passage de câbles intégré au pied</td></tr>
+        <tr><td>Android TV, Google Assistant, wifi intégré</td></tr>
+      </tbody>
+    </table>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Pour chaque caractéristique, rédigez l'avantage pour le client et indiquez une preuve possible.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Identifiez les mobiles SONCASE auxquels ce téléviseur peut répondre.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Indice :</strong> l'avantage commence souvent par « vous permet de… » ou « vous profitez de… ». Dans un magasin, la preuve la plus forte reste la démonstration sur l'écran.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <table class="tableau-corr">
+          <thead><tr><th>Caractéristique</th><th>Avantage</th><th>Preuve</th></tr></thead>
+          <tbody>
+            <tr><td>4K HDR</td><td class="val">Image très détaillée et réaliste</td><td>Démonstration</td></tr>
+            <tr><td>Full LED</td><td class="val">Contraste renforcé, noirs profonds</td><td>Démonstration, fiche produit</td></tr>
+            <tr><td>Processeur X1 Extreme</td><td class="val">Détails précis quelle que soit la source vidéo</td><td>Démonstration</td></tr>
+            <tr><td>Bords ultrafins</td><td class="val">Meilleure immersion, design élégant dans le salon</td><td>Produit exposé</td></tr>
+            <tr><td>Câbles intégrés au pied</td><td class="val">Installation propre, pas de fils visibles</td><td>Manipulation du produit</td></tr>
+            <tr><td>Android TV, Google Assistant, wifi</td><td class="val">Accès direct aux applications, commande vocale</td><td>Démonstration</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <p class="conclu">Sécurité (marque reconnue), nouveauté (modèle récent), confort (nombreuses fonctions, commande vocale), orgueil (design haut de gamme).</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 15 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 15</span>
+    <span class="badge badge-3">⬆⬆⬆ niveau examen</span>
+    <span class="exo-titre-txt">Sélectionner les produits à présenter au client</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      Un client se présente au rayon image : « Mon téléviseur ne fonctionne plus, j'ai un problème d'affichage. Je voudrais un modèle fiable, je ne veux plus être embêté. Mais je n'ai pas un gros budget : pas plus de 500 € environ. »
+    </div>
+    <table class="tableau-donnees">
+      <thead><tr><th>Produit</th><th>Prix TTC</th><th>Informations</th></tr></thead>
+      <tbody>
+        <tr><td>TV LED Essentielb</td><td class="num">349,99 €</td><td>marque de distributeur, bons avis clients</td></tr>
+        <tr><td>TV LED Samsung</td><td class="num">990,00 €</td><td>marque reconnue</td></tr>
+        <tr><td>TV LED Sony Bravia</td><td class="num">3 690,00 €</td><td>haut de gamme</td></tr>
+        <tr><td>TV LED LG</td><td class="num">449,00 €</td><td>marque reconnue</td></tr>
+        <tr><td>TV LED Essentielb Kea</td><td class="num">229,99 €</td><td>entrée de gamme</td></tr>
+      </tbody>
+    </table>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Pour quelle raison le client souhaite-t-il changer de téléviseur ?</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Identifiez ses principaux mobiles d'achat. Justifiez.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">3</span>
+        <p>Quels éléments surveillerez-vous dans le choix des produits ? Quel service associé pourriez-vous proposer pour le rassurer ?</p>
+      </div>
+      <div class="question">
+        <span class="q-num">4</span>
+        <p>Éliminez les produits inadaptés (justifiez) et classez les autres par ordre de pertinence.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Indice :</strong> deux produits sont trop chers. Un produit d'entrée de gamme peut ne pas rassurer un client qui recherche la fiabilité.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <p>Son téléviseur actuel ne fonctionne plus (problème d'affichage) : c'est un achat de renouvellement.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <p><span class="res">Sécurité</span> : il veut un produit fiable (« je ne veux plus être embêté »). <span class="res">Argent</span> : budget limité à 500 € environ.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">3</span>
+        <p>La fiabilité du produit et son prix. Une extension de garantie peut être proposée pour rassurer le client.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">4</span>
+        <table class="tableau-corr">
+          <thead><tr><th>Produit</th><th>Décision</th><th>Justification</th></tr></thead>
+          <tbody>
+            <tr><td>Sony Bravia</td><td class="val">Éliminé</td><td>3 690 € : très au-dessus du budget</td></tr>
+            <tr><td>Essentielb Kea</td><td class="val">Éliminé</td><td>entrée de gamme, ne rassure pas sur la fiabilité</td></tr>
+            <tr><td>Essentielb</td><td class="val">1</td><td>349,99 € : dans le budget, bons avis</td></tr>
+            <tr><td>LG</td><td class="val">2</td><td>449,00 € : marque reconnue, dans le budget</td></tr>
+            <tr><td>Samsung</td><td class="val">3</td><td>990,00 € : hors budget, à présenter seulement si le client accepte d'augmenter son budget</td></tr>
+          </tbody>
+        </table>
+        <p class="conclu">L'ordre entre Essentielb et LG peut être inversé si l'élève justifie que la marque reconnue rassure davantage le client sur la fiabilité.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<hr class="section-sep">
+
+<!-- ══════════════════════════════════════════════════════════
+     BLOC 5 – CAS COMPLETS
+══════════════════════════════════════════════════════════ -->
+<div class="bloc-titre" id="complet">
+  <span class="icone">🏁</span>
+  <h2>Bloc 5 – Cas complets : analyser une situation de vente</h2>
+</div>
+
+<div class="memo">
+  <div class="memo-titre">🗂 méthode</div>
+  <code>1. Lire le contexte (entreprise, client, canal) → 2. Repérer les étapes de la vente → 3. Identifier besoins, motivations, mobiles et freins → 4. Évaluer l'action du vendeur → 5. Proposer des améliorations rédigées</code>
+  <p class="note">Toujours justifier ses réponses en citant le texte du cas.</p>
+</div>
+
+<!-- EX 16 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 16</span>
+    <span class="badge badge-exam">🎓 cas complet</span>
+    <span class="exo-titre-txt">Analyser une vente en boutique de prêt-à-porter</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      <strong>Contexte.</strong> Vous effectuez votre PFMP dans une boutique Celio à Colmar (prêt-à-porter masculin, plus de 1 100 magasins dans le monde). L'enseigne a adopté le concept « be normal » : des vêtements accessibles, simples, avec un bon rapport qualité / prix, et 20 % de produits écoconçus. La clientèle type est masculine, urbaine, active, âgée d'une trentaine d'années. Votre tutrice, Mme Cazi, vous demande d'analyser par écrit la vente suivante, observée la veille.
+    </div>
+    <div class="contexte dialogue">
+      <span class="v">Vendeur</span> (en train de plier des pulls, sans lever la tête) : Bonjour.<br>
+      <span class="c">Client</span> : Bonjour, je cherche une tenue pour un entretien d'embauche dans une banque, c'est jeudi.<br>
+      <span class="v">Vendeur</span> : Vous voulez un costume ?<br>
+      <span class="c">Client</span> : Oui, je pense… mais je ne sais pas trop. Je n'en ai jamais porté. Je voudrais être à l'aise et ne pas avoir l'air déguisé.<br>
+      <span class="v">Vendeur</span> : Vous faites du 50 ?<br>
+      <span class="c">Client</span> : Oui. Et je n'ai pas énormément d'argent, je suis étudiant.<br>
+      <span class="v">Vendeur</span> : Alors regardez, j'ai ces trois costumes : celui-ci à 129 €, celui-là à 199 € et le dernier à 249 €. Prenez celui que vous voulez.<br>
+      <span class="c">Client</span> : Euh… je vais réfléchir.
+    </div>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Évaluez la prise de contact du vendeur. Rédigez une prise de contact correcte.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Relevez les questions posées par le vendeur et indiquez leur type. Que pensez-vous de son questionnement ?</p>
+      </div>
+      <div class="question">
+        <span class="q-num">3</span>
+        <p>Identifiez le besoin du client (pyramide de Maslow), sa motivation, ses mobiles d'achat et ses freins.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">4</span>
+        <p>Rédigez la reformulation que le vendeur aurait dû faire.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">5</span>
+        <p>Relevez les erreurs commises lors de la présentation des produits et indiquez comment le vendeur aurait dû procéder.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">6</span>
+        <p>Rédigez une note à Mme Cazi présentant votre analyse et vos propositions d'amélioration.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Indice :</strong> le client a donné beaucoup d'informations sans que le vendeur les exploite. Repérez chaque étape absente ou ratée : accueil, questionnement, reformulation, présentation, essayage.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction complète</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <p>Prise de contact ratée : le vendeur reste occupé, ne regarde pas le client (non-verbal négatif), n'est pas disponible et ne propose aucune accroche.</p>
+        <code>« Bonjour monsieur, bienvenue ! Que puis-je faire pour vous ? »</code>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <code>« Vous voulez un costume ? » → fermée | « Vous faites du 50 ? » → fermée</code>
+        <p>Le vendeur ne pose que des questions fermées et ne cherche pas à comprendre la situation du client (type d'entreprise, style souhaité, budget précis). Il aurait dû commencer par des questions ouvertes (ex. : « Comment imaginez-vous votre tenue ? »), puis alternatives.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">3</span>
+        <table class="tableau-corr">
+          <tbody>
+            <tr><td>Besoin (Maslow)</td><td class="val">Estime (faire bonne impression, être reconnu) – voire appartenance (s'intégrer au milieu bancaire)</td></tr>
+            <tr><td>Motivation</td><td class="val">Personnelle (achat pour lui-même, lié à son projet)</td></tr>
+            <tr><td>Mobiles</td><td class="val">Confort (« être à l'aise »), argent (« étudiant », peu d'argent), orgueil (« ne pas avoir l'air déguisé »)</td></tr>
+            <tr><td>Freins</td><td class="val">Prix, manque d'habitude du costume, peur d'être mal à l'aise</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">4</span>
+        <code>« Si je comprends bien, vous recherchez une tenue pour un entretien dans une banque jeudi, dans laquelle vous serez à l'aise et naturel, en taille 50, avec un budget limité. C'est bien cela ? »</code>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">5</span>
+        <p>Erreurs : trois produits présentés en même temps, simple annonce des prix sans argument, pas de mise en valeur, pas d'essayage proposé, client laissé seul face au choix.</p>
+        <p>Bonne pratique : présenter un seul produit à la fois en commençant par le plus cher, argumenter selon les mobiles (confort de la coupe, polyvalence de la veste pour l'argent, élégance discrète pour l'orgueil), faire toucher et essayer.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">6</span>
+        <p class="redige">
+          <strong>NOTE</strong><br><br>
+          <strong>À :</strong> Mme Cazi, responsable de la boutique<br>
+          <strong>De :</strong> [Prénom Nom], stagiaire vendeur(se)<br>
+          <strong>Date :</strong> [date]<br>
+          <strong>Objet :</strong> analyse de la vente « costume pour entretien »<br><br>
+          La vente observée n'a pas abouti : le client est reparti sans acheter.<br><br>
+          La prise de contact n'a pas instauré de climat de confiance : le vendeur ne s'est pas rendu disponible. La découverte s'est limitée à deux questions fermées, alors que le client exprimait des mobiles clairs (confort, argent, orgueil) et des freins (prix, peu d'habitude du costume). Aucune reformulation n'a été faite. Enfin, trois costumes ont été présentés en même temps, sans argument ni essayage.<br><br>
+          Je propose : un accueil personnalisé dès l'entrée du client ; une découverte commençant par des questions ouvertes, suivie d'une reformulation ; la présentation d'un seul modèle à la fois, argumenté selon les mobiles du client ; un essayage systématique. Une fiche réflexe « étapes de la vente » pourrait être mise à disposition des vendeurs.
+        </p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- EX 17 -->
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 17</span>
+    <span class="badge badge-exam">🎓 cas complet</span>
+    <span class="exo-titre-txt">Répondre aux besoins d'une cliente à distance</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">
+      <strong>Contexte.</strong> Vous travaillez au service client téléphonique d'un site de vente de coffrets cadeaux. Une cliente, Mme Bernard, 58 ans, appelle :<br><br>
+      « Bonjour, je voudrais offrir un cadeau à ma fille et à son conjoint pour leurs 10 ans de vie commune. Ils travaillent beaucoup, ils sont toujours fatigués. Ils aiment voyager, mais ils n'ont pas souvent le temps. Je ne voudrais pas dépasser 100 €. Et je ne connais pas bien leurs goûts, j'ai peur de me tromper. »
+    </div>
+    <table class="tableau-donnees">
+      <thead><tr><th>Produit</th><th>Prix</th><th>Contenu</th></tr></thead>
+      <tbody>
+        <tr><td>Coffret « Séjour détente »</td><td class="num">89,90 €</td><td>1 nuit pour 2 avec petit-déjeuner et accès spa, au choix parmi 1 500 hôtels (mer, forêt, ville)</td></tr>
+        <tr><td>Coffret « Escapade gourmande »</td><td class="num">129,90 €</td><td>1 nuit pour 2 avec dîner gastronomique</td></tr>
+        <tr><td>Coffret « Aventure »</td><td class="num">69,90 €</td><td>1 activité sportive pour 2 (saut en parachute, rafting…)</td></tr>
+        <tr><td>Carte-cadeau</td><td class="num">montant libre</td><td>valable 1 an sur l'ensemble des coffrets du site</td></tr>
+        <tr><td>Coffret « Dîner pour deux »</td><td class="num">49,90 €</td><td>1 dîner pour 2 dans un restaurant partenaire</td></tr>
+      </tbody>
+    </table>
+    <div class="questions">
+      <div class="question">
+        <span class="q-num">1</span>
+        <p>Pourquoi devez-vous particulièrement soigner le ton de votre voix lors de cet appel ?</p>
+      </div>
+      <div class="question">
+        <span class="q-num">2</span>
+        <p>Identifiez la motivation d'achat de la cliente, ses mobiles d'achat et son frein principal. Justifiez.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">3</span>
+        <p>Rédigez deux questions (une ouverte, une alternative) qui vous permettraient de compléter la découverte.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">4</span>
+        <p>Sélectionnez les produits à proposer et ceux à éliminer. Justifiez vos choix.</p>
+      </div>
+      <div class="question">
+        <span class="q-num">5</span>
+        <p>Rédigez deux arguments adaptés aux mobiles de la cliente.</p>
+      </div>
+    </div>
+    <div class="ordre-grandeur"><strong>Indice :</strong> confrontez chaque produit à trois critères : le budget (100 € maximum), le besoin du couple (se reposer, voyager) et le frein de la cliente (peur de se tromper).</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction complète</button>
+    <div class="correction">
+      <div class="corr-etape">
+        <span class="c-num">1</span>
+        <p>À distance, la cliente ne voit pas le vendeur : le ton, le débit et l'intonation sont les seuls moyens de montrer le sérieux, la courtoisie et le professionnalisme. La voix reflète l'image de l'entreprise.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">2</span>
+        <p><span class="res">Motivation oblative</span> : elle veut faire plaisir à sa fille et à son conjoint.</p>
+        <p><span class="res">Mobiles</span> : sympathie (cadeau pour un anniversaire de couple), argent (100 € maximum), sécurité (« peur de me tromper »).</p>
+        <p><span class="res">Frein principal</span> : la crainte de ne pas choisir un cadeau qui plaise.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">3</span>
+        <code>Ouverte : « Quelles sont les activités que votre fille et son conjoint apprécient le plus ? »</code>
+        <code>Alternative : « Préféreraient-ils un séjour au calme ou une activité plus dynamique ? »</code>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">4</span>
+        <table class="tableau-corr">
+          <thead><tr><th>Produit</th><th>Décision</th><th>Justification</th></tr></thead>
+          <tbody>
+            <tr><td>Séjour détente (89,90 €)</td><td class="val">Proposé en 1<sup>er</sup></td><td>dans le budget, repos + voyage, large choix de lieux</td></tr>
+            <tr><td>Carte-cadeau</td><td class="val">Proposée</td><td>lève le frein : le couple choisit selon ses goûts</td></tr>
+            <tr><td>Escapade gourmande (129,90 €)</td><td class="val">Éliminé</td><td>dépasse le budget</td></tr>
+            <tr><td>Aventure (69,90 €)</td><td class="val">Éliminé</td><td>ne répond pas au besoin de repos d'un couple fatigué</td></tr>
+            <tr><td>Dîner pour deux (49,90 €)</td><td class="val">Possible en complément</td><td>dans le budget, mais ne répond pas au goût du voyage</td></tr>
+          </tbody>
+        </table>
+        <p class="conclu">Toute sélection cohérente et justifiée par le budget, le besoin et le frein est acceptée.</p>
+      </div>
+      <div class="corr-etape">
+        <span class="c-num">5</span>
+        <code>« Le coffret Séjour détente permettra à votre fille et à son conjoint de se reposer, avec un accès spa, alors qu'ils travaillent beaucoup. Et comme ils aiment voyager, ils choisiront eux-mêmes leur destination parmi 1 500 hôtels, à la mer, en forêt ou en ville. » (sympathie, argent : 89,90 €)</code>
+        <code>« Avec la carte-cadeau, aucun risque de vous tromper : ils choisiront le coffret qui leur plaît, et vous fixez vous-même le montant. » (sécurité, argent)</code>
+      </div>
+    </div>
+  </div>
+</details>
+
+</main>
+
+<footer class="site-footer">
+  Bac pro MCV – épreuve E31 vente-conseil &nbsp;|&nbsp; 17 exercices progressifs – prendre contact avec le client, identifier ses besoins et présenter le produit
+</footer>
+
+<script>
+function toggleCorr(btn) {
+  const corr = btn.nextElementSibling;
+  const isVisible = corr.classList.contains('visible');
+  corr.classList.toggle('visible', !isVisible);
+  btn.textContent = isVisible ? '✅ Voir la correction' : '🔒 Masquer la correction';
+}
+</script>
+
+</body>
+</html>
